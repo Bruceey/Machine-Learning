@@ -16,6 +16,7 @@ test*
 *.h5
 output/
 /**/ch13/MNIST/
+CelebA/
 
 # Distribution / packaging
 .Python
