@@ -15,8 +15,9 @@ test*
 *.dot
 *.h5
 output/
-#/**/ch13/MNIST/
+/**/ch13/MNIST/
 datasets/
+data/
 
 
 # Distribution / packaging
