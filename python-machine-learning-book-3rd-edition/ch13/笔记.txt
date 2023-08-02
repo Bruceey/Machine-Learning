@@ -6,3 +6,8 @@ It's important to pass expand_animations = False as an argument:
 
 Try:
 `tf.image.decode_image(img, expand_animations=False)`
+
+
+
+2. tf.reshape(tensor, ())  # size=()将直接变成一个数，不再是序列
+   tf.reshape(tensor, (-1)) # 展平为一维数据，但还是一个序列
