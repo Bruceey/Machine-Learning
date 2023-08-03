@@ -1,0 +1,34 @@
+1. 可变默认参数
+如container=[]这个参数，每次调用时都会用同一个列表
+def add_item(item, container=[]):
+    container.append(item)
+    return container
+
+# 第一次调用函数
+list1 = add_item(1)
+print(list1)  # [1]
+
+# 第二次调用函数
+list2 = add_item(2)
+print(list2)  # [1, 2]
+
+# 第三次调用函数
+list3 = add_item(3)
+print(list3)  # [1, 2, 3]
+
+避免出现这种情况
+def add_item(item, container=None):
+    if container is None:
+        container = []
+    container.append(item)
+    return container
+
+
+2. c = collections.Counter(['eggs', 'ham', 'ham'])
+   是dict的子类，用来统计单词的个数，此时c：Counter({'ham': 2, 'eggs': 1})
+
+3. sorted()函数返回列表
+
+
+4. 探索函数签名使用方法
+d2l.download

@@ -1,0 +1,69 @@
+# spider_env
+fake-useragent
+pycryptodome
+aiohttp
+selenium
+scrapy
+pillow  scrapy需要pillow，不然ImagesPipeline不起作用
+
+
+# 机器学习环境
+Torch1.31
+tensorflow                2.10.0
+gym-0.26.1
+
+notebook
+seaborn
+conda install scikit-learn-intelex
+
+
+
+############### conda配置文件 ##########################
+conda的配置文件在miniconda/.condarc中，设置如下：
+########
+ssl_verify: true
+channels:
+  # - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  # - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+  # - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+  - conda-forge
+  # - defaults
+auto_activate_base: false
+# proxy_servers:
+#   http: http://127.0.0.1:10809
+show_channel_urls: true
+#########
+############### conda配置文件 ########################
+
+
+
+############### mac针对conda环境配置 ##################
+################
+## Mac下 .bash_profile 和 .zshrc 两者之间的区别
+.bash_profile中修改的环境变量只对当前窗口有效，修改完.bash_profile之后记得在终端输入source ~/.bash_profile使之生效。
+.zshrc在电脑每次自启时都会生效（永久有效），修改完之后在终端输入source ~/.zshrc使之生效。
+################
+
+之后再创建一个general通用环境，并更改默认进入环境为general
+
+#在mac中设置
+在~/.zshrc中添加conda activate general
+############### mac针对conda环境配置 ##################
+
+
+
+############### windows针对conda环境配置 ##################
+只需要在cmd快捷方式的“属性”--“目标”上增加以下语句:
+/k conda activate general
+
+至于鼠标右键打开终端、并进入genaral环境：其设置参考我的csdn
+############### windows针对conda环境配置 ##################
+
+
+
+conda create -n env_name [package_name ...]  # -n指定创建环境的名字，后面的package_name可选多个包，但建议一定设置python版本，如python=3.10
+conda remove -n env_name --all  # 删除环境时加上比较好
+conda remove package_name ...   # 可删除该环境下多个包，注意pip是用uninstall卸载包，也是可以同时卸载多个包
+conda config --show [key_name]  # 显示配置文件，如channels
+####    注意conda安装完成所有包后执行以下命令来清理缓存
+conda clean -a                  # -a, --all    Remove index cache, lock files, unused cache packages, tarballs, and logfiles.
