@@ -32,3 +32,7 @@ def add_item(item, container=None):
 
 4. 探索函数签名使用方法
 d2l.download
+
+5. assert
+assert test, data   # 如果test为假，data将作为异常AssertionError构造函数的参数
+assert ('linux' in sys.platform), "该代码只能在 Linux 下执行"
