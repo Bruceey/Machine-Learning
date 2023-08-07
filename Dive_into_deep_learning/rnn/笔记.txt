@@ -36,3 +36,28 @@ d2l.download
 5. assert
 assert test, data   # 如果test为假，data将作为异常AssertionError构造函数的参数
 assert ('linux' in sys.platform), "该代码只能在 Linux 下执行"
+
+6. SparseCategoricalCrossentropy不要求y是onehot编码
+   CategoricalCrossentropy要求y是onehot编码
+
+	查看categorical_crossentropy函数的默认参数列表和使用方法介绍
+ 	其中形参默认为from_logits=False，网络预测值y_pred 表示必须为经过了 Softmax函数的输出值。
+	当 from_logits 设置为 True 时，网络预测值y_pred 表示必须为还没经过 Softmax 函数的变量 z。
+	from_logits=True 标志位将softmax激活函数实现在损失函数中，便不需要手动添加softmax损失函数，提升数值计算稳定性。
+	from_logits 指的就是是否有经过Logistic函数，常见的Logistic函数包括Sigmoid、Softmax函数。
+
+    简单来说：默认为from_logits=False，表示进来的数据已经过Logistic函数处理映射到0~1之间；
+                 from_logits=True， 表示进来的数据没有经过处理，它会先自动先映射到0～1之间，再计算损失
+
+    注意：
+    ce = tf.keras.losses.CategoricalCrossentropy()
+    ce(y_true, y_pred)，计算损失，参数传递顺序跟平时相反
+
+
+7.      elf.rnn = tf.keras.layers.SimpleRNN(
+        num_hiddens, return_sequences=True, return_state=True, time_major=True
+        )
+        - return_state	Boolean. Whether to return the last state in addition to the output. Default: False
+        - time_major决定了inputs Tensor前两个dim表示的含义，设置为True表示将num_steps放在第0维，避免转置，计算效率更高
+            time_major=False时[batch_size, sequence_length, embedding_size]
+            time_major=True时[sequence_length, batch_size, embedding_size]
