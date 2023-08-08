@@ -67,3 +67,16 @@ conda remove package_name ...   # 可删除该环境下多个包，注意pip是�
 conda config --show [key_name]  # 显示配置文件，如channels
 ####    注意conda安装完成所有包后执行以下命令来清理缓存
 conda clean -a                  # -a, --all    Remove index cache, lock files, unused cache packages, tarballs, and logfiles.
+
+
+
+########################## git 配置 ########################
+出现问题:
+fatal: unable to access 'https://github.com/Bruceey/Machine-Learning.git/': OpenSSL SSL_read: Connection was reset, errno 10054
+
+解决方法：
+git config --global http.sslVerify "false"
+这行命令其实就是修改用户目录下的.gitconfig的文件，反映在文件中增加的内容如下:
+[http]
+	sslVerify = false
+########################## git 配置 ########################
