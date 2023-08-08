@@ -61,3 +61,8 @@ assert ('linux' in sys.platform), "该代码只能在 Linux 下执行"
         - time_major决定了inputs Tensor前两个dim表示的含义，设置为True表示将num_steps放在第0维，避免转置，计算效率更高
             time_major=False时[batch_size, sequence_length, embedding_size]
             time_major=True时[sequence_length, batch_size, embedding_size]
+
+
+8. tf.reshape(X, (-1, 5)) 二维
+   tf.reshape(X, (-1,)  一维
+   tf.reshape(X, ()) 零维
