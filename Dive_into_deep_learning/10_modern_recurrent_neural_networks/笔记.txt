@@ -1,0 +1,20 @@
+1.  self.rnns = [d2l.RNNScratch(num_inputs if i==0 else num_hiddens, num_hiddens, sigma)
+                        for i in range(num_layers)]
+    注意这里的for循环只作用于第一个‘，’前的语句，即 num_inputs if i==0 else num_hiddens
+
+2. tf.stack()用法: Stacks a list of rank-R tensors into one rank-(R+1) tensor.
+(1) 在10_3_Deep_RNN.ipynb中的class StackedRNNScratch(d2l.Module): forward方法中，
+    outputs = tf.stack(outputs, 0)，由于outputs是num_steps个形状为(batch_size, vocab_size)的列表，
+    stack后类型变为tf.Tensor，形状为(num_steps, batch_size, vocab_size)
+
+(2) 在RNNLMScratch的output_layer方法中，
+    def output_layer(self, rnn_outputs):
+        outputs = [tf.matmul(H, self.W_hq) + self.b_q for H in rnn_outputs]
+        return tf.stack(outputs, 1)
+    由于outputs是num_steps个形状为(batch_size, vocab_size)的列表，
+    stack后形状变为(batch_size, num_steps, vocab_size)
+
+
+3.  RNN最后一层都没有封装，即所有的接口前向传播后返回outputs, state；当return_state=True时才返回state
+    outputs的shape为(num_steps, batch_size, vocab_size)，当time_major=True时；
+    state是outputs的最后一个元素。以上具体代码针对tensorflow
