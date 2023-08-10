@@ -66,3 +66,6 @@ assert ('linux' in sys.platform), "该代码只能在 Linux 下执行"
 8. tf.reshape(X, (-1, 5)) 二维
    tf.reshape(X, (-1,)  一维
    tf.reshape(X, ()) 零维
+
+   tf.reshape(X, 1)
+   tf.reshape(X, ())   这两个均可以用int()转化为一个整数

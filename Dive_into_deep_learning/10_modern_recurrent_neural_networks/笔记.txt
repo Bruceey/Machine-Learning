@@ -18,3 +18,8 @@
 3.  RNN最后一层都没有封装，即所有的接口前向传播后返回outputs, state；当return_state=True时才返回state
     outputs的shape为(num_steps, batch_size, vocab_size)，当time_major=True时；
     state是outputs的最后一个元素。以上具体代码针对tensorflow
+
+4. 总结tf.reshape   tf.stack   tf.concate
+
+        outputs = [tf.concat((f, b), -1)
+                   for f, b in zip(f_outputs, reversed(b_outputs))]，即在最后一维拼接起来
