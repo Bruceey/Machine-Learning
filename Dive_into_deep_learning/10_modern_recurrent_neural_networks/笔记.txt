@@ -23,3 +23,16 @@
 
         outputs = [tf.concat((f, b), -1)
                    for f, b in zip(f_outputs, reversed(b_outputs))]，即在最后一维拼接起来
+
+
+5. 关于return_state=True的说明
+        gru_cells = [tf.keras.layers.GRUCell(num_hiddens, dropout=dropout)
+                     for _ in range(num_layers)]
+        self.rnn = tf.keras.layers.RNN(gru_cells, return_sequences=True,
+                                       return_state=True, time_major=True)
+        outputs, *state = self.rnn(X, state)
+If return_state: return a list of tensors. The first tensor is the output.
+The remaining tensors are the last states, each with shape [batch_size, state_size],
+where state_size could be a high dimension tensor shape.
+
+另外注意：self.rnn(X, state)   参数分别是inputs, initial_state=None

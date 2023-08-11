@@ -69,3 +69,5 @@ assert ('linux' in sys.platform), "该代码只能在 Linux 下执行"
 
    tf.reshape(X, 1)
    tf.reshape(X, ())   这两个均可以用int()转化为一个整数
+
+   tf.concat([a, b], axis) 拼接矩阵
