@@ -1,11 +1,75 @@
+tensorflow默认不能调用类似对象形式的方法，如tensor.reshape(size)，只能面向过程式地调用：tf.reshape(tensor, size);
+pytorch则两种方法均可.
+
+如果要开启tensorflow的调用类似对象形式的方法，需设置：
+from tensorflow.python.ops.numpy_ops import np_config
+np_config.enable_numpy_behavior()
+
+
 1. a = [1, 2,3]
    b = np.array([4,5,6], dtype=np.int32)
    t_a = torch.tensor(a)
    t_b = torch.from_numpy(b)
 
+   也可以t_b = torch.tensor(b)
    而tf都是tf.convert_to_tensor(a或b)
 
-  都是.dtype获取类型，.shape
+  都是.dtype获取类型，.shape，都是.numpy()取numpy值
 
 t_a_new = t_a.to(torch.int64)
 t_a_new = tf.cast(t_a, tf.int64)
+
+
+Transposing a tensor:
+    t = torch.rand(3, 5)
+    t_tr = torch.transpose(t, 0, 1) # 或者t.transpose(0, 1)
+
+    t = tf.random.uniform(shape=(3, 5))
+    >>> t_tr = tf.transpose(t)
+
+
+reshape：
+    t = torch.zeros(30)
+    >>> t_reshape = t.reshape(5, 6) # 或torch.reshape(t, (5, 6))
+
+
+Removing the unnecessary dimensions:
+    t = torch.zeros(1, 2, 1, 4, 1)
+    >>> t_sqz = torch.squeeze(t, 2)   # torch.Size([1, 2, 1, 4, 1])  -->  torch.Size([1, 2, 4, 1])
+
+    >>> t = tf.zeros((1, 2, 1, 4, 1))
+    >>> t_sqz = tf.squeeze(t, axis=(2, 4))   # (1, 2, 1, 4, 1)  -->  (1, 2, 4)
+
+
+torch.multiply
+tf.multiply
+
+torch.mean
+tf.reduce_mean
+
+torch.matmul      # 注意pytorch矩阵相乘可以使用符号@ , 如 A @ B
+tf.matmul
+
+
+设置随机种子：
+    torch.manual_seed(1)
+    tf.random.set_seed(1)
+
+Split, stack, and concatenate tensors:
+     A = torch.ones(3)
+    >>> B = torch.zeros(2)
+    >>> C = torch.cat([A, B], axis=0)    # tensor([1., 1., 1., 0., 0.])
+
+    A = torch.ones(3)
+    >>> B = torch.zeros(3)
+    >>> S = torch.stack([A, B], axis=1)
+    >>> print(S)
+    tensor([[1., 0.],
+            [1., 0.],
+            [1., 0.]])
+
+tf的数据与上分别对应，则为：
+    C = tf.concat([A, B], axis=0)
+    >>> print(C.numpy())
+
+    S = tf.stack([A, B], axis=1)
