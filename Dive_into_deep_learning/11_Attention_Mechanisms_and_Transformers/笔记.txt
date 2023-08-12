@@ -1,0 +1,1 @@
+new_tensor = matrix.detach()  # 返回和matrix相同的tensor，但该tensor不会参与反向传播
