@@ -36,3 +36,16 @@ The remaining tensors are the last states, each with shape [batch_size, state_si
 where state_size could be a high dimension tensor shape.
 
 另外注意：self.rnn(X, state)   参数分别是inputs, initial_state=None
+
+
+6. 在10_7的Seq2SeqDecoder类中，将decoder的输入和encoder的输出拼接
+           context = tf.tile(tf.expand_dims(context, 0), (embs.shape[0], 1, 1))
+           # Concat at the feature dimension
+           embs_and_context = tf.concat((embs, context), -1)
+
+7. 在10_7中的Seq2Seq类，事后诸葛亮：不知道对不对？？
+    def loss(self, Y_hat, Y):
+        l = super(Seq2Seq, self).loss(Y_hat, Y, averaged=False)
+        mask = tf.cast(tf.reshape(Y, -1) != self.tgt_pad, tf.float32)
+        return tf.reduce_sum(l * mask) / tf.reduce_sum(mask)
+

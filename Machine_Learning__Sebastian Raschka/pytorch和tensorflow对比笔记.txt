@@ -1,0 +1,11 @@
+1. a = [1, 2,3]
+   b = np.array([4,5,6], dtype=np.int32)
+   t_a = torch.tensor(a)
+   t_b = torch.from_numpy(b)
+
+   而tf都是tf.convert_to_tensor(a或b)
+
+  都是.dtype获取类型，.shape
+
+t_a_new = t_a.to(torch.int64)
+t_a_new = tf.cast(t_a, tf.int64)
