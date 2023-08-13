@@ -1,1 +1,5 @@
 new_tensor = matrix.detach()  # 返回和matrix相同的tensor，但该tensor不会参与反向传播
+
+排序：
+    x = torch.randn(3, 4)
+    sorted, indices = torch.sort(x) # sorted是排序好的tensor，默认按照最后一个轴排序；indices返回sorted值在原tensor中的对应索引

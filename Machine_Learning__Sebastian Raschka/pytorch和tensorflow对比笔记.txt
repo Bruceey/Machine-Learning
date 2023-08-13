@@ -16,6 +16,7 @@ np_config.enable_numpy_behavior()
 
   都是.dtype获取类型，.shape，都是.numpy()取numpy值
 
+          t_a.type(torch.float32)
 t_a_new = t_a.to(torch.int64)
 t_a_new = tf.cast(t_a, tf.int64)
 
