@@ -16,11 +16,16 @@ If False, no squeezing at all is done:
     the returned Axes object is always a 2D array containing Axes instances, even if it ends up being 1x1.
 
 
-3. c = b[None, :]    # 表示新增一个维度
 
-4. 重复数据;
-   torch.repeat_interleave()
-   tf.repeat()
+
+11.3的笔记
+    1. c = b[None, :]    # 表示对b在0轴新增一个维度
+
+    2. 重复数据
+        shape = X.shape  # (2, 2, 4)
+        if valid_lens.dim() == 1:  # torch.tensor([2, 3])
+            valid_lens = torch.repeat_interleave(valid_lens, shape[1])  # torch.tensor([2, 2, 3, 3])
+
 
 5. torch.permute(input, dims) → Tensor
    Returns a view of the original tensor input with its dimensions permuted.
