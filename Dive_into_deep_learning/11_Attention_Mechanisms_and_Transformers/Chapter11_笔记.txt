@@ -26,6 +26,24 @@ If False, no squeezing at all is done:
         if valid_lens.dim() == 1:  # torch.tensor([2, 3])
             valid_lens = torch.repeat_interleave(valid_lens, shape[1])  # torch.tensor([2, 2, 3, 3])
 
+    3. 利用masked_softmax将"<pad>"的值设为很小（比如-1e6），而不是直接设为0
+
+
+11.4的笔记
+    1. 针对Linear和GRU初始化权重
+    def init_seq2seq(module):
+        """Initialize weights for Seq2Seq."""
+        if type(module) == nn.Linear:
+             nn.init.xavier_uniform_(module.weight)  #
+        if type(module) == nn.GRU:
+            for param in module._flat_weights_names:
+                if "weight" in param: # param里面有weight开头的和bias开头的参数
+                    nn.init.xavier_uniform_(module._parameters[param])
+
+    self.apply(d2l.init_seq2seq)
+
+
+
 
 5. torch.permute(input, dims) → Tensor
    Returns a view of the original tensor input with its dimensions permuted.
