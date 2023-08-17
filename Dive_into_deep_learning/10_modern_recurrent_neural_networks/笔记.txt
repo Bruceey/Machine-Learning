@@ -70,3 +70,50 @@ where state_size could be a high dimension tensor shape.
    self.apply(init_seq2seq)
 
    X.t() # pytorch的转置
+
+   # 注意pytorch的默认参数顺序
+   self.rnn = nn.GRU(num_inputs, num_hiddens, num_layers,
+                             dropout=dropout)
+
+   矩阵转置：
+      >>> x = torch.randn(2, 3, 5)
+      >>> x.size()
+      torch.Size([2, 3, 5])
+      >>> torch.permute(x, (2, 0, 1)).size()
+      torch.Size([5, 2, 3])
+
+      outputs = tf.transpose(self.dense(outputs), (1, 0, 2))
+
+   交叉熵损失：
+      pytorch:
+          # 对比softmax与log的结合与nn.LogSoftmaxloss(负对数似然损失)的输出结果，发现两者是一致的。
+          logsoftmax_func=nn.LogSoftmax(dim=1)
+          logsoftmax_output=logsoftmax_func(x_input)
+          nllloss_func = nn.NLLLoss()
+          nlloss_output = nllloss_func(logsoftmax_output, y_target)
+
+          # 这里的cross_entropy == LogSoftmax + NLLLoss
+          F.cross_entropy(Y_hat, Y) # 不管是class indices，还是onehot编码的都是这个
+
+      tensorflow不同:
+         # 默认from_logits=False, X是否要经过logits函数(如softmax)处理，False表示不需要，也就是X已经归一化为0-1之间的概率了；
+         #    from_logits=True，需要将X先经过logits函数处理，再丢给SparseCategoricalCrossentropy或CategoricalCrossentropy
+         fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)  # 要求Y是class indices
+         fn(Y, Y_hat)
+
+         fn = tf.keras.losses.CategoricalCrossentropy(from_logits=True)  # 要求Y是one-hot编码
+                  fn(Y, Y_hat)
+
+   交叉熵损失函数的reduction参数：
+   pytorch：
+      cross_entropy还有一个reduction参数：默认"mean": the sum of the output will be divided by the number of elements in the output
+                                   设置为 "None": 计算每个样本的损失，返回一个向量
+
+   tensorflow:
+      AUTO: Indicates that the reduction option will be determined by the usage context. For almost all cases this defaults to SUM_OVER_BATCH_SIZE.
+      None：计算每个样本的损失，返回一个向量
+      默认auto，即根据上下文设置。比如这里：
+            def loss(self, Y_hat, Y):
+                l = super(Seq2Seq, self).loss(Y_hat, Y, averaged=False)
+                mask = tf.cast(tf.reshape(Y, -1) != self.tgt_pad, tf.float32)
+                return tf.reduce_sum(l * mask) / tf.reduce_sum(mask)   # 这里mask是向量，故l也是一个向量（自动设置为None）
