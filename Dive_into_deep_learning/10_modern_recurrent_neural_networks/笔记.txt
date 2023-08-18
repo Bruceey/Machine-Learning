@@ -117,3 +117,8 @@ where state_size could be a high dimension tensor shape.
                 l = super(Seq2Seq, self).loss(Y_hat, Y, averaged=False)
                 mask = tf.cast(tf.reshape(Y, -1) != self.tgt_pad, tf.float32)
                 return tf.reduce_sum(l * mask) / tf.reduce_sum(mask)   # 这里mask是向量，故l也是一个向量（自动设置为None）
+
+collections模块常用：
+    （1）label_subs = collections.defaultdict(int)
+    （2）class collections.Counter([iterable-or-mapping])¶
+        Counter 是 dict 的子类，用于计数 hashable 对象。它是一个多项集，元素存储为字典的键而它们的计数存储为字典的值。

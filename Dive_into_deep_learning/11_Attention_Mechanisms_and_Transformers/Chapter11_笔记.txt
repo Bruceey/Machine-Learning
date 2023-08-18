@@ -1,25 +1,31 @@
 new_tensor = matrix.detach()  # 返回和matrix相同的tensor，但该tensor不会参与反向传播
 
-排序：
-    x = torch.randn(3, 4)
-    sorted, indices = torch.sort(x) # sorted是排序好的tensor，默认按照最后一个轴排序；indices返回sorted值在原tensor中的对应索引
+11.2的笔记
+    排序：
+        torch:
+            x = torch.randn(3, 4)
+            sorted, indices = torch.sort(x) # sorted是排序好的tensor，默认按照最后一个轴排序；indices返回sorted值在原tensor中的对应索引
+        tensorflow:
+            x_train = tf.sort(tf.random.uniform((n,1)) * 5, 0) # 默认也是按照最后一个轴排序；只不过它不返回indices
+
+    pytorch和tensorflow都可用符号"@"作矩阵相乘
 
 
-2. plt.subplots(num_rows, num_cols, figsize=figsize, sharex=True, sharey=True, squeeze=False)
-squeeze：bool, default: True
-If True, extra dimensions are squeezed out from the returned array of Axes:
-    if only one subplot is constructed (nrows=ncols=1), the resulting single Axes object is returned as a scalar.
-    for Nx1 or 1xM subplots, the returned object is a 1D numpy object array of Axes objects.
-    for NxM, subplots with N>1 and M>1 are returned as a 2D array.
+    2. plt.subplots(num_rows, num_cols, figsize=figsize, sharex=True, sharey=True, squeeze=False)
+    squeeze：bool, default: True
+    If True, extra dimensions are squeezed out from the returned array of Axes:
+        if only one subplot is constructed (nrows=ncols=1), the resulting single Axes object is returned as a scalar.
+        for Nx1 or 1xM subplots, the returned object is a 1D numpy object array of Axes objects.
+        for NxM, subplots with N>1 and M>1 are returned as a 2D array.
 
-If False, no squeezing at all is done:
-    the returned Axes object is always a 2D array containing Axes instances, even if it ends up being 1x1.
+    If False, no squeezing at all is done:
+        the returned Axes object is always a 2D array containing Axes instances, even if it ends up being 1x1.
 
 
 
 
 11.3的笔记
-    1. c = b[None, :]    # 表示对b在0轴新增一个维度
+    1. c = b[None, :]    # 表示对b在0轴新增一个维度，tf和torch通用
 
     2. 重复数据 torch.repeat_interleave(input, repeats, dim=None)
         shape = X.shape  # (2, 2, 4)
@@ -28,7 +34,17 @@ If False, no squeezing at all is done:
         注意:
             如果valid_lens是一维tensor，在轴0重复相当于 use the flattened input array(默认)
 
+        tensorflow的重复
+            valid_lens = tf.repeat(valid_lens, shape[1]) # 与上方一样的效果
+
     3. 利用masked_softmax将"<pad>"的值设为很小（比如-1e6），而不是直接设为0
+
+    4. tf.where(mask, X, value)
+       X[~mask] = value
+
+   5. 扩展维度:
+        tf: tf.expand_dims(queries, 2) # 在维度索引为2处新增一个维度
+        torch: queries.unsqueeze(2)
 
 
 11.4的笔记
