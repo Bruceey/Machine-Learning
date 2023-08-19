@@ -60,6 +60,18 @@ new_tensor = matrix.detach()  # 返回和matrix相同的tensor，但该tensor不
 
     self.apply(d2l.init_seq2seq)
 
+    2.  # 注意此处out是list of tensor，第0个tensor是rnn的输出，后面的都是hidden_state的tensor
+        out = self.rnn(x, hidden_state, **kwargs)
+        hidden_state = out[1:]
+        outputs.append(out[0])
+
+    3. 关于时间步是否在第一位的问题？
+        输入：
+            不管是tf还是torch，输入shape都是(batch_size, num_steps)
+        输出：
+            tf的模型默认参数time_major=False，即输出时的shape为：(batch_size, num_steps, num_hiddens)
+            torch的模型默认参数batch_first=False,输出的shape为: (num_steps, batch_size, num_hiddens)
+
 
 
 
