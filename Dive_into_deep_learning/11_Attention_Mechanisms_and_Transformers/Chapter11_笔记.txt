@@ -46,6 +46,11 @@ new_tensor = matrix.detach()  # 返回和matrix相同的tensor，但该tensor不
         tf: tf.expand_dims(queries, 2) # 在维度索引为2处新增一个维度
         torch: queries.unsqueeze(2)
 
+   6. 逐元素重复
+        # [1, 1, 2, 2, 3, 3, 4, 4]
+        repeat([[1,2], [3,4]], repeats=2)
+
+
 
 11.4的笔记
     1. 针对Linear和GRU初始化权重
