@@ -8,9 +8,9 @@ pillow  scrapy需要pillow，不然ImagesPipeline不起作用
 
 
 # 机器学习环境
-Torch1.31
+Torch        1.31
 torchtext
-tensorflow                2.10.0
+tensorflow   2.10.0
 gym-0.26.1
 
 notebook
