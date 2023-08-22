@@ -103,3 +103,19 @@ new_tensor = matrix.detach()  # 返回和matrix相同的tensor，但该tensor不
 
         1.transpose() # 只能操作两个维度
         2.permute(dims) # 可操作多个维度
+
+    X = self.patch_embedding(X)                 # shape: (128, 36, 512)
+    # self.cls_token shape: (1, 1, 512) ==> (128, 1, 512)
+    X2 = self.cls_token.expand(X.shape[0], -1, -1)
+
+    需要求导的设置为Parameter的实例，其他的为Tensor
+    self.cls_token = nn.Parameter(torch.zeros(1, 1, num_hiddens))
+    self.pos_embedding = nn.Parameter(torch.randn(1, num_steps, num_hiddens))
+
+    self.optim = torch.optim.Adam(self.parameters(), lr=self.lr)
+    self.optim.zero_grad()
+    with torch.no_grad():
+        loss.backward()
+        if self.gradient_clip_val > 0:  # To be discussed later
+            self.clip_gradients(self.gradient_clip_val, self.model)
+        self.optim.step()
