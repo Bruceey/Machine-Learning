@@ -88,3 +88,18 @@ new_tensor = matrix.detach()  # 返回和matrix相同的tensor，但该tensor不
         torch.Size([2, 3, 5])
         >>> torch.permute(x, (2, 0, 1)).size()
         torch.Size([5, 2, 3])
+
+11.7笔记
+    dataset = torch.utils.data.TensorDataset(*tensors)  # 此处tensors是四个tensor的元祖
+    return torch.utils.data.DataLoader(dataset, self.batch_size,
+                                               shuffle=train)
+
+    for batch in self.train_dataloader: # 这里迭代batch是四个tensor的列表
+
+
+11.8笔记
+    torch：
+        X3 = X2.flatten(2) # 将X2从轴索引为2处开始展平
+
+        1.transpose() # 只能操作两个维度
+        2.permute(dims) # 可操作多个维度
