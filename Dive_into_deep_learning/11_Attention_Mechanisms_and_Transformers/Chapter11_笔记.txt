@@ -119,3 +119,6 @@ new_tensor = matrix.detach()  # 返回和matrix相同的tensor，但该tensor不
         if self.gradient_clip_val > 0:  # To be discussed later
             self.clip_gradients(self.gradient_clip_val, self.model)
         self.optim.step()
+
+    pytorch计算梯度的解释：with torch.no_grad()
+    https://blog.csdn.net/qq_43369406/article/details/131115578
