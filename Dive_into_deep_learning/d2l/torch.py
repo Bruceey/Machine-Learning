@@ -2962,7 +2962,7 @@ def get_dataloader_workers():
     """Use 4 processes to read the data.
 
     Defined in :numref:`sec_utils`"""
-    return 4
+    return 0
 
 def load_data_fashion_mnist(batch_size, resize=None):
     """Download the Fashion-MNIST dataset and then load it into memory.
@@ -3133,7 +3133,11 @@ class Accumulator:
         self.data = [0.0] * n
 
     def add(self, *args):
-        self.data = [a + float(b) for a, b in zip(self.data, args)]
+        temp = []
+        for a, b in zip(self.data, args):
+            temp.append(a + float(b))
+        self.data = temp
+        # self.data = [a + float(b) for a, b in zip(self.data, args)]
 
     def reset(self):
         self.data = [0.0] * len(self.data)

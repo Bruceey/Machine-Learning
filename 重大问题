@@ -1,3 +1,5 @@
 1. 11.3节的Dot Product Attention需要除以sqrt(d)的原因？
     设随机变量X～N（0,1）,Y=X^2,则Y服从（ ）分布?
         则Y服从自由度为1的χ^2分布
+
+2. torch.utils.data.DataLoader()中的num_workers保持默认0即可，在学习阶段不然报错
