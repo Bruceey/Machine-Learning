@@ -3,3 +3,5 @@
         则Y服从自由度为1的χ^2分布
 
 2. torch.utils.data.DataLoader()中的num_workers保持默认0即可，在学习阶段不然报错
+
+3. Transformer处 x sqrt(d)，即Embedding的x与位置相加时为何先将x乘以sqrt(d)
