@@ -34,15 +34,21 @@
                                                 num_workers=0)
 
 15.4节笔记
+1.
     binary_cross_entropy和binary_cross_entropy_with_logits相似但不同
-
     相同：都需要target在0~1之间，
     不同：binary_cross_entropy的input需要在0~1之间（需要提前用sigmod函数）被称为概率值，或者logits；
-
-    关于weight参数：weight的shape和inputs的shape相同，loss计算后对应元素需要乘以weight的对应元素
+2.
+    关于weight参数：weight的shape和inputs的shape相同，loss计算后对应元素需要乘以weight的对应元素；
+    此时若reduction=None，则返回和input一样的shape
     具体见：https://blog.csdn.net/code_plus/article/details/115739343
 
-
+3.
     torch.numel(input) # 获取input里面有多少个元素
 
-    for a, b in zip(self.data, args): # 若self.data = [], 此时a=0；若args
+
+4. 余弦相似度、矩阵和向量相乘
+            cos = torch.mv(W, x) / torch.sqrt(torch.sum(W * W, dim=1) *
+                                              torch.sum(x * x) + 1e-9)
+            # torch.topk返回类元组，第一个是值，第二个是值对应的索引；真实使用时用索引比较多，所以取[1]
+            topk = torch.topk(cos, k=k+1)[1].cpu().numpy().astype('int32')
