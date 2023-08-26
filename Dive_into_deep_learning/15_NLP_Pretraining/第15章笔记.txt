@@ -33,6 +33,11 @@
                                                 collate_fn=batchify,
                                                 num_workers=0)
 
+2. random.choices()
+    # sequence, 第二个参数也是一个序列，跟第一个参数大小匹配，表示每个元素被选中的比重(e/sum(weight))，k表示选多少个元素
+    self.candidates = random.choices(self.population, self.sampling_weights, k=10000)
+
+
 15.4节笔记
 1.
     binary_cross_entropy和binary_cross_entropy_with_logits相似但不同
